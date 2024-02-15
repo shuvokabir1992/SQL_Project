@@ -8,7 +8,7 @@ CREATE TABLE Location(
 	PRIMARY KEY (CityID)
 );
 
-CREATE TABLE SportsDiscipline(
+CREATE TABLE SportsDiscpline(
 	DisciplineID	VARCHAR(50),
 	Distance		VARCHAR(50),
 	KM				INT,
@@ -59,3 +59,39 @@ VALUES
 	('D2','C3','2024-12-24',180),
 	('D2','C4','2024-12-21',300),
 	('D2','C5','2024-12-26',500);
+
+-------------------
+--SQL Query from Question paper
+
+USE SQL_Extension
+
+SELECT SUM(NumberOfPart) AS Overall
+FROM Participants
+
+---Rollup Example
+
+SELECT City,Country, SUM(NumberOfPart) AS Persons
+
+FROM Location JOIN Participants on Location.CityID = Participants.CityID
+
+GROUP BY rollup(Country,City)
+
+ORDER BY Country DESC
+
+
+---Cube Example
+
+SELECT Distance,Country, SUM(NumberOfPart) AS Persons
+
+FROM 
+	Participants 
+	JOIN SportsDiscpline 
+	on Participants.DisciplineID = SportsDiscpline.DisciplineID
+	JOIN Location
+	on Participants.CityID = Location.CityID
+
+
+
+GROUP BY cube(Country,Distance)
+
+ORDER BY GROUPING(Country), GROUPING(Distance)

@@ -47,6 +47,8 @@ from Employees
 
 ----------------------
 
+--Grouping Sets Example
+
 SELECT Country, Gender, SUM(Salary) AS Salary
 FROM Employees
 GROUP BY
@@ -57,4 +59,38 @@ GROUP BY
         (Gender),           --Sum of Salary by Gender
         ()                  --Grand Total
     )
+ORDER BY GROUPING(Country),GROUPING(Gender)
+
+
+
+SELECT Country, SUM(Salary) AS Salary
+FROM Employees
+GROUP BY ROLLUP(Country)
+
+
+SELECT Country, SUM(Salary) AS Salary
+FROM Employees
+GROUP BY Country WITH ROLLUP
+
+
+SELECT Country, SUM(Salary) AS Salary
+FROM Employees
+GROUP BY Country 
+
+UNION ALL
+
+SELECT NULL, SUM(Salary) AS Salary
+FROM Employees
+
+--Rollup Example
+SELECT Country, Gender, SUM(Salary) AS Salary
+FROM Employees
+GROUP BY ROLLUP(Country, Gender)
+ORDER BY GROUPING(Country),GROUPING(Gender)
+
+
+--CUBE Example
+SELECT Country, Gender, SUM(Salary) AS Salary
+FROM Employees
+GROUP BY CUBE(Country, Gender)
 ORDER BY GROUPING(Country),GROUPING(Gender)
