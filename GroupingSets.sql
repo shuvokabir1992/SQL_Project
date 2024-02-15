@@ -19,3 +19,42 @@ Insert Into Employees Values (8, 'Elizabeth', 'Female', 7000, 'USA')
 Insert Into Employees Values (9, 'Tom', 'Male', 5500, 'UK')
 Insert Into Employees Values (10, 'Ron', 'Male', 5000, 'USA');
 Go
+
+-------------
+
+
+
+select Country, Gender, SUM(Salary) AS Salary
+from Employees
+Group By Country, Gender
+
+UNION ALL
+
+select Country, NULL, SUM(Salary) AS Salary
+from Employees
+Group By Country
+
+UNION ALL
+
+select NULL, Gender, SUM(Salary) AS Salary
+from Employees
+Group By Gender
+
+UNION ALL
+
+select NULL, Null, SUM(Salary) AS Salary
+from Employees
+
+----------------------
+
+SELECT Country, Gender, SUM(Salary) AS Salary
+FROM Employees
+GROUP BY
+    Grouping Sets
+    (
+        (Country, Gender),  --Sum of Salary by Country and Gender
+        (Country),          --Sum of Salary by Country
+        (Gender),           --Sum of Salary by Gender
+        ()                  --Grand Total
+    )
+ORDER BY GROUPING(Country),GROUPING(Gender)
