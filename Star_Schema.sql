@@ -104,3 +104,17 @@ Select * from Sale
  WHERE P.Article = 'Laptop'
  GROUP BY G.Branch, T.Year
 
+
+---------------------------
+--Prefered way to write this query
+
+
+SELECT g.Branch, t.Year, SUM(s.Sales) as Sales
+
+FROM Sale AS s
+  JOIN Geography AS g on s.GeographyID = g.GeographyID
+  JOIN Product AS p on s.ProductID = p.ProductID
+  JOIN TIme AS t on t.TimeID = s.TimeID
+
+WHERE p.Article = 'Laptop'
+Group BY g.Branch, t.Year
